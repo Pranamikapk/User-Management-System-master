@@ -3,6 +3,7 @@ import { FaUser } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { addNewUser } from '../../features/admin/adminSlice'
 
 function AddUser() {
     const [formData , setFormData] = useState({
@@ -51,14 +52,14 @@ function AddUser() {
                 password
             }
 
-            dispatch(AddUser(userData))
+            dispatch(addNewUser(userData))
             navigate('/admin/dashboard')
         }
     }
 
     const isValidEmail = (email) =>{
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        return emailRegex.text(email)
+        return emailRegex.test(email)
     }
 
 

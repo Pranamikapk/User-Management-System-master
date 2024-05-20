@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { blockUser, editUser, getAllusers, reset } from '../../features/admin/adminSlice'
+import './UserList.css'
 
 function UserList() {
     const dispatch = useDispatch()
-    const users = useSelector((state) => state.adminAuth.users)
+    const users = useSelector((state) => state.adminAuth.users || [])
     const [searchQuery , setSearch] = useState("")
     const [filteredUsers , setFilteredUsers] = useState([])
 
@@ -54,12 +55,14 @@ function UserList() {
             <input
             style={{height: '35px'}}
             className='form-control'
-            placeholder='Username/Email' 
+            placeholder='Search 
+
+            /Email' 
             type="text"
             value={searchQuery}
             onChange={(e)=>setSearch(e.target.value)}
              />
-             <button style={{height : '35px' , marginLeft:"10px"}}
+             <button style={{ height : '35px' , marginLeft:"20px"}}
              className='btn-1'>
                 {" "}
                 <FaSearch/>Search
@@ -67,7 +70,7 @@ function UserList() {
         </div>
 
         {filteredUsers && filteredUsers.length > 0 ? (
-            <table className='user-table'>
+            <table className='user-table' >
                 <thead>
                     <tr>
                         <th scope='col'>Sl No</th>
@@ -80,10 +83,11 @@ function UserList() {
                 </thead>
                 <tbody>
                     {filteredUsers.map((user,index)=>(
+                        user && (
                         <tr key ={index}>
                             <td>{index + 1}</td>
                             <td>
-                                <div className="profile-image-container">
+                                <div className="profile-image-container" style={{borderRadius:"30%"}}>
                                     <img
                                     className='user-image' 
                                     src={
@@ -91,7 +95,7 @@ function UserList() {
                                         user.image:
                                         "https://avatar.iran.liara.run/public/boy?username=Ash"
                                     } alt="User 2"
-                                    style={{width:"100px", height:"100px"}} />
+                                    style={{width:"100px", height:"100px" , borderRadius:"30%"}} />
                                 </div>
                             </td>
                             <td>{user.name}</td>
@@ -111,6 +115,7 @@ function UserList() {
                                 </div>
                             </td>
                         </tr>
+                        )
                     ))}
                 </tbody>
             </table>

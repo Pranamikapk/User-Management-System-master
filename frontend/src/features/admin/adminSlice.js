@@ -45,6 +45,7 @@ export const getAllusers = createAsyncThunk(
         try {
             const token = thunkAPI.getState().adminAuth.admin.token
             const response = await adminService.getAllusers(token)
+            console.log("response",response);
             return response
         } catch (error) {
             const message = 
@@ -78,7 +79,40 @@ export const editUser = createAsyncThunk(
 )
 
 export const blockUser = createAsyncThunk(
-    
+    "adminAuth/userBlock",
+    async(userId,thunkAPI) =>{
+        try {
+            const token = thunkAPI.getState().adminAuth.admin.token
+            return await adminService.blockUser(userId,token)
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data && 
+                error.response.data.message) || 
+                error.message || 
+                error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+export const addNewUser = createAsyncThunk(
+    'adminAuth/addUser',
+    async(userData,thunkAPI)=>{
+        try {
+            const token = thunkAPI.getState().adminAuth.admin.token
+            const response = await adminService.createUser(token,userData)
+            return response.data
+        } catch (error) {
+            const message = 
+            (error.response && 
+                error.response.data && 
+                error.response.data.message) || 
+                error.message || 
+                error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
 )
 
 export const adminSlice = createSlice({
@@ -135,6 +169,32 @@ export const adminSlice = createSlice({
             state.isLoading = false
             state.isError = true
             state.message = action.payload.users
+        })
+        .addCase(blockUser.pending ,(state) =>{
+            state.isLoading = true
+        })
+        .addCase(blockUser.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = true
+            state.users = action.payload.users
+        })
+        .addCase(blockUser.rejected,(state,action)=>{
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(addNewUser.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(addNewUser.fulfilled ,(state , action)=> {
+            state.isLoading = false
+            state.isSuccess = true
+            state.users.push(action.payload)
+        })
+        .addCase(addNewUser.rejected ,(state ,action)=> {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
         })
     }
 })

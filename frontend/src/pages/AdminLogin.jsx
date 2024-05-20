@@ -22,12 +22,14 @@ function AdminLogin() {
   const {admin ,isLoading, isError , isSuccess, message} = useSelector((state) => state.adminAuth)
 
     useEffect(()=>{
+        console.log('useEffect ');
+        console.log(admin);
         if(isError){
             toast.error(message)
         }
 
-        if(isSuccess || admin?.post){
-            navigate('/admin/getUser')
+        if(isSuccess || admin){
+            navigate('/admin/dashboard')
             dispatch(reset())
         }
 

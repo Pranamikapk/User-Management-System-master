@@ -1,22 +1,54 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-  }
+.user-list {
+  margin-top: 20px;
+}
 
-  .user-image{
-    width: 100%; /* Make sure the image covers the circular container */
-    height: 100%; /* Make sure the image covers the circular container */
-    object-fit: cover;
-  }
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
 
-  .profile-image-container {
-    width: 100px; /* Adjust the size as needed */
-    height: 100px; /* Adjust the size as needed */
-    border-radius: 50%; /* This will make the image circular */
-    overflow: hidden; /* This ensures the image stays within the circular boundary */
-  }
+.user-table th,
+.user-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  text-align: left;
+}
+
+.user-image {
+  width: 100%; 
+  object-fit: cover;
+}
+
+.profile-image-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 30%;
+  overflow: hidden; 
+}
+
+.action-buttons {
+  align-items: center;
+}
+
+.btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-1 {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-1:hover {
+  background-color: #0056b3;
+}
+
+.form-control {
+  height: 35px;
+}

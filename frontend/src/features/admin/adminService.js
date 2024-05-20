@@ -32,11 +32,27 @@ const editUser = async(token, userId, name, email )=>{
         }
     }
     const response = await axios.put(API_URL + 'editUser',{userId,name,email},config)
-
+    return response.data
 }
 
-const blockUser = async()=>{
+const blockUser = async(userId,token)=>{
+    const config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL + 'userBlock',{userId},config)
+    return response.data
+}
 
+const createUser = async(token, userData) =>{
+    const config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL + 'addUser',userData,config)
+    return response.data
 }
 
 const adminService = {
@@ -44,7 +60,8 @@ const adminService = {
     logout,
     getAllusers,
     editUser,
-    blockUser
+    blockUser,
+    createUser
 }
 
 export default adminService
