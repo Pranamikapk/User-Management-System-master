@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import AdminHeader from './components/AdminHeader';
 import Header from './components/Header';
 import AddUser from './components/admin/AddUser';
 import AdminDashboard from './pages/AdminDashboard';
@@ -10,9 +12,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import UserProfile from './pages/UserProfile';
 import './toast.css';
-import AdminHeader from './components/AdminHeader';
 
 function App() {
+  const { admin } = useSelector((state) => state.adminAuth);
+  const { user } = useSelector((state) =>state.auth)
   return (
     <div className='container'>
     <BrowserRouter>
@@ -22,9 +25,9 @@ function App() {
     </Routes>
 
     <Routes>
-      <Route path = '/admin/login' element = {<AdminLogin/>}/>
-      <Route path='/admin/dashboard' element = {<AdminDashboard/>}/>
-      <Route path='/admin/adduser' element = {<AddUser/>}/>
+      <Route path = '/admin/login' element = {admin ? <Navigate to = "/admin/dashboard"/> : <AdminLogin/>}/>
+      <Route path = '/admin/dashboard' element = {admin ? <AdminDashboard/> : <Navigate to = "/admin/login"/>}/>
+      <Route path = '/admin/adduser' element = {admin ?<AddUser/> : <Navigate to = "/admin/login"/>}/>
 
     </Routes>
     

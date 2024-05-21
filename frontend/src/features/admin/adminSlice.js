@@ -1,7 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import adminService from "./adminService"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import adminService from "./adminService";
 
-const admin = JSON.parse(localStorage.getItem("admin"))
+const safeJSONParse = (item) => {
+    try {
+      return JSON.parse(item);
+    } catch (e) {
+      return null;
+    }
+  };
+
+const storedAdmin = localStorage.getItem("admin");
+const admin = storedAdmin && storedAdmin !== "undefined" ? safeJSONParse(storedAdmin) : null;
 
 const initialState = {
     admin: admin ? admin : null,
@@ -18,9 +27,7 @@ export const login = createAsyncThunk(
     async(admin,thunkAPI) =>{
         try {
             console.log("Slice",admin);
-            const response = await adminService.login(admin)
-            console.log("response",response);
-            return response.data
+            return await adminService.login(admin)
         } catch (error) {
             const message = 
         (error.response && 
@@ -163,7 +170,14 @@ export const adminSlice = createSlice({
         .addCase(editUser.fulfilled,(state,action)=>{
             state.isLoading = false
             state.isSuccess = true
-            state.users = action.payload.users
+            // state.users = action.payload.users || []
+            const updatedUser = action.payload;
+            if (updatedUser && updatedUser._id) {
+                const index = state.users.findIndex(user => user._id === updatedUser._id);
+                if (index !== -1) {
+                    state.users[index] = updatedUser;
+                }
+            }
         })
         .addCase(editUser.rejected,(state,action)=>{
             state.isLoading = false

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { blockUser, editUser, getAllusers, reset } from '../../features/admin/adminSlice'
 import './UserList.css'
 
-function UserList() {
+function UserList({userId}) {
     const dispatch = useDispatch()
     const users = useSelector((state) => state.adminAuth.users || [])
     const [searchQuery , setSearch] = useState("")
@@ -15,7 +15,7 @@ function UserList() {
         return () =>{
             dispatch(reset())
         }
-    },[dispatch])
+    },[dispatch,userId])
 
     useEffect(() =>{
         if(searchQuery.trim() === ""){
@@ -39,7 +39,8 @@ function UserList() {
         }
 
         if(newName && newEmail){
-            dispatch(editUser({userId,name: newName , email: newEmail}))
+         dispatch(editUser({userId,name: newName , email: newEmail}))
+         dispatch(getAllusers())
         }
     }
 

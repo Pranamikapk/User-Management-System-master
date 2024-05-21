@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
-import { login, reset } from '../features/admin/adminSlice'
+import { login } from '../features/admin/adminSlice'
 
 function AdminLogin() {
   const [adminData , setAdminData] = useState({
@@ -28,9 +28,8 @@ function AdminLogin() {
             toast.error(message)
         }
 
-        if(isSuccess || admin){
+        if(isSuccess || admin ){
             navigate('/admin/dashboard')
-            dispatch(reset())
         }
 
     },[admin,isError,isSuccess, message, navigate, dispatch])
@@ -64,7 +63,7 @@ function AdminLogin() {
             email,
             password
         }
-
+        console.log("adminCred:",email,password);
         dispatch(login(adminCred))
     }
 

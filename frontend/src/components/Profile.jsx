@@ -25,6 +25,7 @@ function Profile() {
     .then((response)=>response.json())
     .then((data)=>{
       dispatch(ProfileUpdate(data.url))
+      
     })
     .catch((err)=>console.log(err))
   }

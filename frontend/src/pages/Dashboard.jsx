@@ -12,11 +12,7 @@ const dispatch = useDispatch()
 
 const {user} = useSelector((state) => state.auth)
 const { goals ,isLoading , isError , message} = useSelector((state) => state.goal)
-console.log('User:', user);
-    console.log('Goals:', goals);
-    console.log('isLoading:', isLoading);
-    console.log('isError:', isError);
-    console.log('message:', message);
+
 useEffect(() =>{
   
   if(isError){

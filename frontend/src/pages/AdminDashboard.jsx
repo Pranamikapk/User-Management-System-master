@@ -14,20 +14,22 @@ function AdminDashboard() {
     },[admin,navigate])
   return (
     <>
-        <section className='heading'>
-            <h1>Welcome {admin && admin.name}</h1>
-            <p>Admin Dashboard</p>
-            <div>
-                {" "}
-                <button className='btn' onClick={()=> navigate('/admin/adduser')}>
-                    Add User
-                </button>
-            </div>
-        </section>
-
+        { admin && (
+            <section className='heading'>
+                <h1>Welcome {admin && admin.name}</h1>
+                <p>Admin Dashboard</p>
+                <div>
+                    {" "}
+                    <button className='btn' onClick={()=> navigate('/admin/adduser')}>
+                        Add User
+                    </button>
+                </div>
+            </section>
+        )}
         <section>
             <UserList/>
         </section>
+        
     </>
   )
 }
